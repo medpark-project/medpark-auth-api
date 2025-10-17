@@ -25,3 +25,13 @@ class Usuario(UsuarioBase):
     id: int
 
     model_config = ConfigDict(from_attributes=True)
+
+
+# schemas para tokens
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    email: str | None = None
