@@ -1,0 +1,27 @@
+[tool.ruff]
+line-length = 88
+exclude = [
+    ".git",
+    "__pycache__",
+    "postgres_data",
+    "venv",
+]
+src = ["src"]
+[tool.ruff.lint]
+# E: pycodestyle (erros de estilo)
+# W: pycodestyle (avisos de estilo)
+# F: Pyflakes (erros lógicos, como variáveis não usadas)
+# I: isort (organização de imports)
+select = ["E", "W", "F", "I"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+# docker compose down
+# docker compose run --rm backend sh -c "sleep 3600" &
+# docker compose exec backend ruff format src
+# docker compose exec backend ruff check src --fix
+# fix docker momentaneo: 
+# sudo docker compose run --rm backend ruff format src
+# checar fix: 
+# sudo docker compose run --rm backend ruff check src
