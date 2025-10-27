@@ -1,15 +1,4 @@
 services:
-  auth_db:
-    image: postgres:15-alpine
-    volumes:
-      - ./postgres_auth_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=medpark_user
-      - POSTGRES_PASSWORD=medpark_password
-      - POSTGRES_DB=medpark_auth_db
-    ports:
-      - "5433:5432"
-
   auth_api:
     build: .
     ports:
@@ -17,8 +6,10 @@ services:
     volumes:
       - ./src:/code/src
       - ./pyproject.toml:/code/pyproject.toml
-    environment:
-      - DATABASE_URL=postgresql://medpark_user:medpark_password@auth_db/medpark_auth_db
-    depends_on:
-      - auth_db
-    command: sh -c "ruff format src --check && ruff check src && pytest && uvicorn src.main:app --host 0.0.0.0 --port 8000"
+    command: sh -c "ruff format src --check && ruff check src && uvicorn src.main:app --host 0.0.0.0 --port 8000"
+    networks:
+      - medpark_network
+
+networks:
+  medpark_network:
+    external: true

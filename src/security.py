@@ -1,6 +1,17 @@
 from datetime import datetime, timedelta, timezone
 
 from jose import jwt
+from pydantic import BaseModel
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    email: str | None = None
+
 
 SECRET_KEY = "sua-chave-secreta-super-dificil-de-adivinhar"
 ALGORITHM = "HS256"
