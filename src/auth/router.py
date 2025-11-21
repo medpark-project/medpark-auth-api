@@ -1,11 +1,12 @@
 import httpx
+import os
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from src import security
 
 router = APIRouter()
 
-MEDPARK_BACKEND_URL = "http://backend:8000"
+MEDPARK_BACKEND_URL = os.getenv("MEDPARK_BACKEND_URL", "http://backend:8000")
 
 @router.post("/token", response_model=security.Token)
 async def login_for_access_token(
@@ -15,7 +16,7 @@ async def login_for_access_token(
     backend_url = MEDPARK_BACKEND_URL.rstrip("/")
     validate_url = f"{backend_url}/usuarios/auth/validate"
     
-    print(f"🔍 TENTATIVA DE CONEXÃO: Conectando em {validate_url}") # LOG 1
+    print(f"🔍 TENTATIVA DE CONEXÃO: Conectando em {validate_url}")
 
     async with httpx.AsyncClient(timeout=60.0) as client:
         try:
