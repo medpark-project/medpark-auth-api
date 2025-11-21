@@ -38,7 +38,8 @@ async def login_for_access_token(
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail=f"Falha de comunicação com Backend: {str(e)}",
-
+            )
+            
     user_data = response.json()
     access_token = security.create_access_token(
         data={"sub": user_data["email"], "profile": user_data["profile"]}
